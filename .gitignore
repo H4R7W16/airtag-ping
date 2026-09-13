@@ -1,0 +1,11 @@
+# Lokale Reproduktion und FreeCAD-Sicherungen
+build/
+__pycache__/
+*.pyc
+*.FCBak
+*.FCStd1
+*.log
+.env
+.venv/
+
+# CAD-/Druckdateien im Repository sind absichtlich versionierte Produktartefakte.

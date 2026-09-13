@@ -1,0 +1,58 @@
+{
+  "freecad_version": "1.1.3",
+  "parts": {
+    "BackBody": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 7108.218958310401,
+      "bounds_mm": [
+        50.60000000000001,
+        57.00000000000003,
+        7.400000000001033
+      ]
+    },
+    "FrontBody": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 5658.043771214107,
+      "bounds_mm": [
+        50.60000000000001,
+        43.0,
+        6.400000000000013
+      ]
+    },
+    "PING_Rueckteil.stl": {
+      "solid_mesh": true,
+      "components": 1,
+      "facets": 3806,
+      "cad_symmetric_difference_mm3": 4.638945218427215,
+      "cad_relative_difference": 0.0006526170965799674
+    },
+    "PING_Front.stl": {
+      "solid_mesh": true,
+      "components": 1,
+      "facets": 5538,
+      "cad_symmetric_difference_mm3": 2.557610454232118,
+      "cad_relative_difference": 0.00045203087103076674
+    }
+  },
+  "assembly_dimensions_mm": [
+    50.6,
+    57.0,
+    12.8
+  ],
+  "checks": [
+    "Zwei gültige Einzelkörper",
+    "Außenmaße einschließlich Öse und beider Schraubenohren stimmen",
+    "Kein Überlappungsvolumen der Hälften",
+    "AirTag-Hüllzylinder kollisionsfrei",
+    "Zwei Schrauben Ø2,5×10 inklusive Kopf kollisionsfrei",
+    "Sicherungsmuttern SW5×3,8 kollisionsfrei; Schraube 0,6 mm durch Mutter, 0,4 mm im Gehäuse versenkt",
+    "Beispielring Ø29,2 außen / Draht Ø2,2 kollisionsfrei",
+    "STEP mit zwei gültigen Körpern und Geometrie identisch zum CAD (Volumentoleranz 0,0001 mm³)",
+    "STL/CAD symmetrische Volumendifferenz unter 0,3 %; Grenzen innerhalb 0,05 mm",
+    "STLs geschlossen, jeweils eine Komponente, Zmin=0",
+    "FreeCAD-Recompute ohne Fehler"
+  ],
+  "physical_validation": "Probedruck, Passung, Akustik und Belastung noch nicht physisch getestet."
+}

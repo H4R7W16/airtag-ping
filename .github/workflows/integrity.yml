@@ -1,0 +1,19 @@
+name: Dateiintegrität (keine CAD-Prüfung)
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  integrity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: SHA-256-Dateistand prüfen
+        run: python3 verify_files.py
+      - name: Python-Syntax prüfen (ohne FreeCAD auszuführen)
+        run: python3 -m py_compile verify_files.py verify_model.py render_preview.py PING_erzeugen.FCMacro

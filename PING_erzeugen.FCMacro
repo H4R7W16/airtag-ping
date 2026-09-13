@@ -1,0 +1,262 @@
+# -*- coding: utf-8 -*-
+"""PING / FreeCAD 1.1 — native sketches, pads, pockets and spreadsheet.
+Run as FreeCAD macro, or with FreeCAD's bundled Python.
+All lengths are millimetres. The fixed outline can be edited in its sketch;
+functional dimensions use native expressions linked to the spreadsheet.
+"""
+import os
+import sys
+import math
+import json
+from pathlib import Path
+if os.environ.get('FREECAD_LIB'):
+    sys.path.insert(0, os.environ['FREECAD_LIB'])
+import FreeCAD as App
+import Part
+import Sketcher
+import MeshPart
+
+ROOT = Path(os.environ.get('PING_OUTPUT_DIR', str(Path(__file__).resolve().parent / 'build'))).resolve()
+ROOT.mkdir(parents=True, exist_ok=True)
+if not App.GuiUp:
+    os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
+    import FreeCADGui as Gui
+    Gui.showMainWindow()
+    Gui.getMainWindow().hide()
+else:
+    import FreeCADGui as Gui
+
+V = App.Vector
+doc = App.newDocument('PING_AirTag')
+doc.Label = 'PING · der kleine Schlüsselwächter'
+doc.Comment = 'FDM-Prototyp. Maße in mm. Drucklage separat als STL. Reale Pass-/Belastungsprobe erforderlich.'
+sheet = doc.addObject('Spreadsheet::Sheet','Parameters')
+sheet.Label = '01 · Maße und Druckspiel (mm)'
+rows = [
+ ('AirTag Durchmesser',31.9,'TagDiameter'),
+ ('AirTag Höhe',8.0,'TagHeight'),
+ ('Aufnahme Durchmesser',32.5,'CavityDiameter'),
+ ('Halbschalenhöhe',6.4,'HalfHeight'),
+ ('Boden / Frontwand',2.1,'Floor'),
+ ('Zentrierlippe außen Ø',34.9,'LipDiameter'),
+ ('Zentrierlippe Höhe',1.0,'LipHeight'),
+ ('Gegenführung Ø',35.4,'SocketDiameter'),
+ ('Gegenführung Tiefe',1.25,'SocketDepth'),
+ ('Schrauben-Durchgang Ø',2.9,'BoltBore'),
+ ('Schraubenkopftasche Ø',5.4,'HeadDiameter'),
+ ('Schraubenkopftasche Tiefe',2.4,'HeadDepth'),
+ ('Mutternfalle SW',5.35,'NutAF'),
+ ('Mutternfalle Tiefe',4.8,'NutDepth'),
+ ('Schlüsselring Loch Ø',6.5,'RingBore'),
+ ('Außenfase',0.65,'EdgeChamfer'),
+]
+sheet.set('A1','PING / PARAMETER IN MM')
+sheet.set('B1','Wert')
+sheet.set('C1','Alias')
+sheet.setStyle('A1:C1','bold','add')
+sheet.setBackground('A1:C1',(0.1,0.24,0.25))
+sheet.setForeground('A1:C1',(1.,1.,1.))
+for n,(label,val,alias) in enumerate(rows,2):
+    sheet.set('A'+str(n),label)
+    sheet.set('B'+str(n),str(val))
+    sheet.setAlias('B'+str(n),alias)
+    sheet.set('C'+str(n),alias)
+sheet.set('A20','Kontur: R21,5; Schrauben x±20,5/y−5; Öse y28,5/R7')
+sheet.set('A21','M2,5×10 / Linsenkopf Ø≤4,5 H≤1,5; Sicherungsmutter SW5 H3,8')
+sheet.set('A22','Nur kleine Spieländerungen; nach Änderungen Passprüfung und STL-Export wiederholen.')
+sheet.setColumnWidth('A',440)
+sheet.setColumnWidth('B',90)
+sheet.setColumnWidth('C',180)
+doc.recompute()
+
+def circle(r,x=0,y=0,z=0):
+    return Part.Circle(V(x,y,z),V(0,0,1),r)
+
+def flat_circle(r,x=0,y=0):
+    return Part.Face(Part.Wire([circle(r,x,y).toShape()]))
+
+def polygon(points):
+    verts=[V(x,y,0) for x,y in points]
+    return Part.Face(Part.makePolygon(verts+[verts[0]]))
+
+def merge_planar(*faces):
+    # 2D fuse may leave several adjacent faces. A refined solid union gives
+    # one complete planar outline instead of silently selecting one fragment.
+    solids=[f.extrude(V(0,0,1)) for face in faces for f in face.Faces]
+    solid=solids[0].multiFuse(solids[1:]).removeSplitter()
+    bottoms=[f for f in solid.Faces if abs(f.BoundBox.ZMin)<1e-7 and abs(f.BoundBox.ZMax)<1e-7]
+    assert len(bottoms)==1, 'Planar union must be a single face'
+    return bottoms[0]
+
+def silhouette(lug):
+    faces=[flat_circle(21.5)]
+    for x in (-20.5,20.5):
+        faces.append(flat_circle(4.8,x,-5))
+    if lug:
+        faces.append(polygon([(-11,16),(11,16),(6.4,31),(-6.4,31)]))
+        faces.append(flat_circle(7,0,28.5))
+    return merge_planar(*faces)
+
+def new_sketch(body,name,label,z=0,zexpr=None):
+    sk=doc.addObject('Sketcher::SketchObject',name)
+    body.addObject(sk)
+    sk.Label=label
+    sk.Placement.Base=V(0,0,z)
+    if zexpr: sk.setExpression('Placement.Base.z',zexpr)
+    return sk
+
+def add_wire(sk,wire):
+    for e in wire.Edges:
+        c=e.Curve
+        if isinstance(c,Part.Circle):
+            if e.isClosed(): g=c
+            else: g=Part.ArcOfCircle(c,e.FirstParameter,e.LastParameter)
+        else:
+            g=Part.LineSegment(e.Vertexes[0].Point,e.Vertexes[-1].Point)
+        i=sk.addGeometry(g,False)
+        sk.addConstraint(Sketcher.Constraint('Block',i))
+
+def circles_sketch(body,name,label,z,centers,diam,alias,zexpr=None):
+    sk=new_sketch(body,name,label,z,zexpr)
+    for x,y in centers:
+        i=sk.addGeometry(circle(diam/2,x,y),False)
+        sk.addConstraint(Sketcher.Constraint('DistanceX',i,3,x)) if x else sk.addConstraint(Sketcher.Constraint('DistanceX',i,3,0.0))
+        sk.addConstraint(Sketcher.Constraint('DistanceY',i,3,y)) if y else sk.addConstraint(Sketcher.Constraint('DistanceY',i,3,0.0))
+        c=sk.addConstraint(Sketcher.Constraint('Diameter',i,diam))
+        sk.setExpression('Constraints['+str(c)+']','Parameters.'+alias)
+    return sk
+
+def feature(body,typ,name,label,sk,length,expr=None,reverse=False):
+    old=body.Tip
+    obj=body.newObject('PartDesign::'+typ,name)
+    obj.Label=label
+    obj.Profile=sk
+    obj.Length=length
+    obj.Reversed=reverse
+    if expr: obj.setExpression('Length',expr)
+    doc.recompute()
+    if obj.Shape.isNull() or not obj.Shape.isValid():
+        raise RuntimeError(name+': invalid shape '+repr(obj.State))
+    if old: old.Visibility=False
+    sk.Visibility=False
+    body.Tip=obj
+    obj.Visibility=True
+    return obj
+
+def blank(body,lug,prefix):
+    sk=new_sketch(body,prefix+'Outline','Außenkontur · editierbare fixierte Bögen')
+    add_wire(sk,silhouette(lug).Faces[0].OuterWire)
+    pad=feature(body,'Pad',prefix+'Shell','Grundkörper · 6,4 mm',sk,6.4,'Parameters.HalfHeight')
+    edges=['Edge'+str(i+1) for i,e in enumerate(pad.Shape.Edges) if e.BoundBox.ZMax<0.0001]
+    cham=body.newObject('PartDesign::Chamfer',prefix+'Chamfer')
+    cham.Label='Außenkante · 0,65-mm-Fase'
+    cham.Base=(pad,edges)
+    cham.Size=0.65
+    cham.setExpression('Size','Parameters.EdgeChamfer')
+    doc.recompute()
+    assert not cham.Shape.isNull() and cham.Shape.isValid(), 'Außenfase ungültig'
+    pad.Visibility=False
+    body.Tip=cham
+    return cham
+
+back=doc.addObject('PartDesign::Body','BackBody')
+back.Label='02 · Rückteil / PETG dunkel'
+blank(back,True,'B')
+sk=circles_sketch(back,'BCavitySketch','AirTag-Aufnahme Ø32,5',6.4,[(0,0)],32.5,'CavityDiameter','Parameters.HalfHeight')
+feature(back,'Pocket','BCavity','AirTag-Aufnahme / Boden 2,1',sk,4.3,'Parameters.HalfHeight - Parameters.Floor')
+sk=circles_sketch(back,'BLipSketch','Zentrierlippe · Ringprofil',6.4,[(0,0)],34.9,'LipDiameter','Parameters.HalfHeight')
+i=sk.addGeometry(circle(16.25),False)
+sk.addConstraint(Sketcher.Constraint('Coincident',i,3,0,3))
+c=sk.addConstraint(Sketcher.Constraint('Diameter',i,32.5))
+sk.setExpression('Constraints['+str(c)+']','Parameters.CavityDiameter')
+feature(back,'Pad','BLip','Umlaufende Führung · 1,0 mm',sk,1,'Parameters.LipHeight')
+sk=circles_sketch(back,'BRingSketch','Öse · Bohrung Ø6,5',6.4,[(0,28.5)],6.5,'RingBore','Parameters.HalfHeight')
+feature(back,'Pocket','BRing','Schlüsselringöffnung',sk,6.4,'Parameters.HalfHeight')
+sk=circles_sketch(back,'BBoltSketch','2 × Durchgang Ø2,9',6.4,[(-20.5,-5),(20.5,-5)],2.9,'BoltBore','Parameters.HalfHeight')
+feature(back,'Pocket','BBolts','Schraubendurchgänge',sk,6.4,'Parameters.HalfHeight')
+sk=new_sketch(back,'BNutSketch','2 × Sechskant-Mutternfalle SW5,35',0)
+# Native regular hexagons; block constraints preserve hardware locations.
+for x in (-20.5,20.5):
+    r=5.35/math.sqrt(3)
+    pts=[(x+r*math.cos(math.radians(30+60*j)),-5+r*math.sin(math.radians(30+60*j))) for j in range(6)]
+    add_wire(sk,polygon(pts).OuterWire)
+sk.addProperty('App::PropertyString','Note','Hinweise')
+sk.Note='SW5,35 fest in der Skizze; andere SW über Skizze/Makro. Parameters.NutAF dient als dokumentierter Sollwert.'
+feature(back,'Pocket','BNuts','Versenkte Sicherungsmuttern · 4,8 mm',sk,4.8,'Parameters.NutDepth',True)
+
+front=doc.addObject('PartDesign::Body','FrontBody')
+front.Label='03 · Front / PETG koralle'
+blank(front,False,'F')
+sk=circles_sketch(front,'FCavitySketch','AirTag-Aufnahme Ø32,5',6.4,[(0,0)],32.5,'CavityDiameter','Parameters.HalfHeight')
+feature(front,'Pocket','FCavity','AirTag-Aufnahme / Frontwand 2,1',sk,4.3,'Parameters.HalfHeight - Parameters.Floor')
+sk=circles_sketch(front,'FSocketSketch','Gegenführung Ø35,4',6.4,[(0,0)],35.4,'SocketDiameter','Parameters.HalfHeight')
+feature(front,'Pocket','FSocket','Gegenführung · Spiel 0,25 radial',sk,1.25,'Parameters.SocketDepth')
+sk=circles_sketch(front,'FBoltSketch','2 × Durchgang Ø2,9',6.4,[(-20.5,-5),(20.5,-5)],2.9,'BoltBore','Parameters.HalfHeight')
+feature(front,'Pocket','FBolts','Schraubendurchgänge',sk,6.4,'Parameters.HalfHeight')
+sk=circles_sketch(front,'FHeadSketch','Linsenkopf-Taschen Ø5,4',0,[(-20.5,-5),(20.5,-5)],5.4,'HeadDiameter')
+feature(front,'Pocket','FHeads','Schraubenköpfe versenkt · 2,4 mm',sk,2.4,'Parameters.HeadDepth',True)
+
+def capsule(a,b,r):
+    dx,dy=b[0]-a[0],b[1]-a[1]
+    ln=math.hypot(dx,dy)
+    nx,ny=-dy*r/ln,dx*r/ln
+    f=polygon([(a[0]+nx,a[1]+ny),(b[0]+nx,b[1]+ny),(b[0]-nx,b[1]-ny),(a[0]-nx,a[1]-ny)])
+    return merge_planar(f,flat_circle(r,*a),flat_circle(r,*b))
+
+sk=new_sketch(front,'FFaceSketch','PING zwinkert · Gesicht = Schallöffnungen')
+eye=capsule((-6,4),(-6,6),1.15)
+wink=merge_planar(capsule((3.5,4.8),(6,6.1),0.9),capsule((6,6.1),(8.5,4.8),0.9))
+outer=Part.makeCylinder(9.5,1,V(0,1,0),V(0,0,1),120)
+outer.rotate(V(0,1,0),V(0,0,1),210)
+outer=outer.cut(Part.makeCylinder(7.7,1,V(0,1,0)))
+smilefaces=[f for f in outer.Faces if f.BoundBox.ZMax<1e-6]
+smile=smilefaces[0]
+smileparts=[smile]
+for angle in (210,330):
+    a=math.radians(angle)
+    smileparts.append(flat_circle(.9,8.6*math.cos(a),1+8.6*math.sin(a)))
+smile=merge_planar(*smileparts)
+for f in (eye,wink,smile): add_wire(sk,f.Faces[0].OuterWire)
+feature(front,'Pocket','FFace','Zwinkern und Grinsen · durchgehend',sk,2.1,'Parameters.Floor',True)
+
+# Both bodies are modelled in print orientation, then front is placed into assembly.
+front.Placement=App.Placement(V(0,0,12.8),App.Rotation(V(0,1,0),180))
+front.setExpression('Placement.Base.z','2 * Parameters.HalfHeight')
+for body,color in [(back,(0.10,0.22,0.24)),(front,(0.98,0.35,0.25))]:
+    for obj in body.Group:
+        if hasattr(obj,'ViewObject'):
+            obj.Visibility=False
+    body.Tip.Visibility=True
+    body.Visibility=True
+    body.ViewObject.ShapeColor=color
+    body.Tip.ViewObject.ShapeColor=color
+    body.Tip.ViewObject.LineColor=(.12,.14,.15)
+    body.Tip.ViewObject.DisplayMode='Flat Lines'
+    body.addProperty('App::PropertyString','PrintOrientation','Druck')
+    body.PrintOrientation='STL liegt korrekt auf Z=0; flache Außenseite nach unten, Innenseite offen nach oben.'
+
+refs=doc.addObject('App::DocumentObjectGroup','References')
+refs.Label='04 · Montagehilfen (NICHT drucken)'
+ref=doc.addObject('PartDesign::Feature','AirTagEnvelope')
+ref.Label='AirTag Hüllzylinder Ø31,9 × 8 (kein Originalprofil)'
+ref.Shape=Part.makeCylinder(15.95,8,V(0,0,2.4))
+refs.addObject(ref)
+ref.Visibility=False
+ref.ViewObject.ShapeColor=(.85,.87,.88)
+ref.ViewObject.Transparency=55
+doc.recompute()
+
+for body,name in [(back,'PING_Rueckteil'),(front,'PING_Front')]:
+    s=body.Shape.copy()
+    if body==front: s.Placement=body.Placement.inverse().multiply(s.Placement)
+    assert abs(s.BoundBox.ZMin)<1e-6
+    mesh=MeshPart.meshFromShape(Shape=s,LinearDeflection=0.04,AngularDeflection=0.12,Relative=False)
+    mesh.write(str(ROOT/(name+'.stl')))
+    s.exportBrep(str(ROOT/(name+'.brep')))
+Part.export([back,front],str(ROOT/'PING_Montage.step'))
+if Gui.activeDocument() is not None:
+    Gui.activeDocument().activeView().viewAxonometric()
+    Gui.activeDocument().activeView().fitAll()
+doc.recompute()
+doc.saveAs(str(ROOT/'PING_AirTag.FCStd'))
+print('PING CAD/STL/STEP fertig: '+str(ROOT),flush=True)

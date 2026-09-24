@@ -1,0 +1,51 @@
+{
+  "freecad_version": "1.0.1",
+  "variants": {
+    "Halo": {
+      "valid": true,
+      "assembly_bounds_mm": [
+        39.6,
+        50.7,
+        11.0
+      ],
+      "volume_mm3": 6340.9,
+      "volume_reduction_vs_ping_percent": 50.3,
+      "M3x8_engagement_mm": 2.0,
+      "M3x10_tip_recess_mm": 0.0,
+      "stl_watertight": true,
+      "stl_volume_matches_cad_within_0_3_percent": true,
+      "step_matches_cad": true
+    },
+    "Komet": {
+      "valid": true,
+      "assembly_bounds_mm": [
+        39.6,
+        50.7,
+        11.0
+      ],
+      "volume_mm3": 6668.01,
+      "volume_reduction_vs_ping_percent": 47.8,
+      "M3x8_engagement_mm": 2.0,
+      "M3x10_tip_recess_mm": 0.0,
+      "stl_watertight": true,
+      "stl_volume_matches_cad_within_0_3_percent": true,
+      "step_matches_cad": true
+    },
+    "Signal": {
+      "valid": true,
+      "assembly_bounds_mm": [
+        39.6,
+        50.7,
+        11.0
+      ],
+      "volume_mm3": 6667.78,
+      "volume_reduction_vs_ping_percent": 47.8,
+      "M3x8_engagement_mm": 2.0,
+      "M3x10_tip_recess_mm": 0.0,
+      "stl_watertight": true,
+      "stl_volume_matches_cad_within_0_3_percent": true,
+      "step_matches_cad": true
+    }
+  },
+  "physical_validation": "Neue Varianten noch nicht gedruckt oder belastungsgeprüft."
+}

@@ -1,8 +1,16 @@
 # PING · der kleine Schlüsselwächter
 
+## Neu: PING Trio
+
+![Drei neue Frontmotive: Halo, Komet und Signal](trio/PING_Trio_Uebersicht.png)
+
+Die [PING-Trio-Varianten](trio/README.md) sind kompakter und dünner, haben leicht verrundete Kreisränder und nutzen die polierte Metallseite des AirTags als Gestaltungselement. Ein gemeinsames Rückteil passt zu den drei Fronten. Die Konstruktion ist für **M3×8 oder M3×10** mit normalen M3-Sechskantmuttern ausgelegt; M3×10 ist wegen des vollständigen Muttereingriffs die bevorzugte Länge. FreeCAD-, STL- und STEP-Dateien sowie Druck- und Prüfanleitung stehen im Trio-Ordner. **Die neuen Varianten sind digital geprüft, aber noch nicht probeweise gedruckt.**
+
+Der folgende Abschnitt dokumentiert das bisherige PING-Modell unverändert.
+
 **Ein AirTag-Cover für den Schlüsselbund – in FreeCAD konstruiert, mit zwei PETG-Druckteilen, zwei gesicherten Schrauben und einem Zwinkern.**
 
-Dieses öffentliche Repository dokumentiert den Entwurf und macht die Dateien, den Erzeugungscode und die Prüfmethoden zugänglich. **Stand: digital geprüfter Konstruktionsprototyp; noch nicht physisch gedruckt oder belastungsgeprüft.**
+Dieses öffentliche Repository dokumentiert den Entwurf und macht die Dateien, den Erzeugungscode und die Prüfmethoden zugänglich. **Stand der ursprünglichen Veröffentlichung: digital geprüfter Konstruktionsprototyp.** Der Nutzer berichtet inzwischen, dass das bisherige Modell gedruckt wurde; Maße, Material und Belastungsergebnisse dieses Drucks sind hier noch nicht protokolliert.
 
 ![PING – tatsächliche CAD-Geometrie, montiert und explodiert](PING_Uebersicht.png)
 

@@ -4,7 +4,9 @@
 
 ![Drei neue Frontmotive: Halo, Komet und Signal](trio/PING_Trio_Uebersicht.png)
 
-Die [PING-Trio-Varianten](trio/README.md) sind kompakter und dünner, haben leicht verrundete Kreisränder und nutzen die polierte Metallseite des AirTags als Gestaltungselement. Ein gemeinsames Rückteil passt zu den drei Fronten. Die Konstruktion ist für **M3×8 oder M3×10** mit normalen M3-Sechskantmuttern ausgelegt; M3×10 ist wegen des vollständigen Muttereingriffs die bevorzugte Länge. FreeCAD-, STL- und STEP-Dateien sowie Druck- und Prüfanleitung stehen im Trio-Ordner. **Die neuen Varianten sind digital geprüft, aber noch nicht probeweise gedruckt.**
+![Neue Emoji-Motive: Herzaugen, Schock und Peek](trio/PING_Emoji_Uebersicht.png)
+
+Die [sechs PING-Varianten](trio/README.md) sind kompakter, haben leicht verrundete Kreisränder und nutzen die polierte Metallseite des AirTags als Gestaltungselement. Zu Halo, Komet und Signal sind nun **😍 Herzaugen, 😱 Schock und 🫣 Peek** hinzugekommen. Die Emoji-Formen zeigen große Herzaugen, Hände an den Wangen und Hände vor dem Gesicht; bei den beiden Handmotiven verändert sich auch die Außenkontur. Ein gemeinsames Rückteil passt zu allen Fronten. Für die Emoji-Fronten gibt es **optionale Farbmasken für Multimaterialdruck**; die vertieften Formen sind auch einfarbig druckbar. Die gezeigten **M3-Zylinderkopfschrauben** erhalten für jede Schraubenlänge eine eigene Kopftasche: M3×8 ergibt die schlankere Ausführung, M3×10 baut am Kopf höher auf. FreeCAD-, STL- und STEP-Dateien sowie Druck- und Prüfanleitung stehen im Trio-Ordner. **Die neuen Varianten sind digital geprüft, aber noch nicht probeweise gedruckt.**
 
 Der folgende Abschnitt dokumentiert das bisherige PING-Modell unverändert.
 

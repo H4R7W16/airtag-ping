@@ -1,5 +1,6 @@
-"""Vorschauen direkt aus den gespeicherten Trio-CAD-Körpern rendern."""
+"""Vorschauen direkt aus den gespeicherten CAD-Körpern rendern."""
 
+import math
 from pathlib import Path
 
 import FreeCAD as App
@@ -15,7 +16,12 @@ COLORS = {
     "Halo": ((0.06, 0.12, 0.17), "#183242", "Die ganze Mitte wird zum Spiegel"),
     "Komet": ((0.78, 0.24, 0.12), "#9e3b23", "Metalllicht in Bewegung"),
     "Signal": ((0.10, 0.29, 0.34), "#21515b", "Drei glänzende Funkbögen"),
+    "Herzaugen": ((0.98, 0.72, 0.14), "#ae3041", "Rote Herzen mit metallischem Glanz"),
+    "Schock": ((0.99, 0.77, 0.28), "#397ba1", "Hände an den Wangen, Augen weit offen"),
+    "Peek": ((0.98, 0.73, 0.22), "#9a6d1d", "Ein Auge lugt zwischen den Fingern hervor"),
 }
+MASK_COLORS = {"Rot": (0.82, 0.075, 0.16), "Orange": (0.97, 0.56, 0.25),
+               "Blau": (0.46, 0.77, 0.86), "Ocker": (0.94, 0.55, 0.22)}
 
 
 def actor(shape, color, metal=False):
@@ -48,6 +54,17 @@ def actor(shape, color, metal=False):
     return result
 
 
+def socket_head(x, y):
+    underside = 8.6  # M3×8: 2,4 mm tiefe Tasche in der Front
+    head = Part.makeCylinder(2.75, 3.0, V(x, y, underside))
+    radius = 2.5 / math.sqrt(3)
+    vertices = [V(x + radius * math.cos(math.radians(30 + 60 * n)),
+                  y + radius * math.sin(math.radians(30 + 60 * n)), 10.8)
+                for n in range(6)]
+    socket = Part.Face(Part.makePolygon(vertices + [vertices[0]])).extrude(V(0, 0, 1.0))
+    return head.cut(socket)
+
+
 def render(name):
     doc = App.openDocument(str(CAD / ("PING_Trio_" + name + ".FCStd")))
     back = doc.getObject("BackBody").Shape
@@ -70,8 +87,12 @@ def render(name):
     renderer.AddActor(actor(Part.makeCylinder(12.4, 0.20, V(0, 0, 9.5)),
                             (0.46, 0.51, 0.55), True))
     renderer.AddActor(actor(front, color))
+    for mask_color, rgb in MASK_COLORS.items():
+        mask = doc.getObject("ColorMask_" + mask_color)
+        if mask is not None:
+            renderer.AddActor(actor(mask.Shape, rgb))
     for x in (-15, 15):
-        head = Part.makeCylinder(2.85, 1.65, V(x, -14, 10.0))
+        head = socket_head(x, -14)
         renderer.AddActor(actor(head, (0.52, 0.57, 0.60), True))
     camera = renderer.GetActiveCamera()
     camera.ParallelProjectionOn()
@@ -110,25 +131,28 @@ def font(size, bold=False):
     return ImageFont.truetype(path, size)
 
 
-def montage():
+def montage(names, title, subtitle, output):
     sheet = Image.new("RGB", (2300, 930), "#f4f3ee")
     draw = ImageDraw.Draw(sheet)
-    draw.text((60, 28), "PING TRIO", font=font(62, True), fill="#17343d")
-    draw.text((65, 106), "Drei Motive. Eine schlanke M3-Konstruktion.", font=font(27), fill="#3a555b")
-    for index, name in enumerate(COLORS):
+    draw.text((60, 28), title, font=font(62, True), fill="#17343d")
+    draw.text((65, 106), subtitle, font=font(27), fill="#3a555b")
+    for index, name in enumerate(names):
         x = 45 + index * 760
         preview = Image.open(CAD / ("PING_Trio_" + name + "_Vorschau.png"))
         preview.thumbnail((730, 680))
         sheet.paste(preview, (x, 170))
         draw.text((x + 26, 735), name.upper(), font=font(39, True), fill=COLORS[name][1])
         draw.text((x + 26, 793), COLORS[name][2], font=font(23), fill="#365056")
-    draw.text((65, 875), "CAD-Geometrie · AirTag und Schrauben vereinfacht dargestellt · Probedruck erforderlich",
+    draw.text((65, 875), "CAD-Geometrie · Farbmasken optional · AirTag und Schrauben vereinfacht · Probedruck erforderlich",
               font=font(21), fill="#657477")
-    sheet.save(HERE / "PING_Trio_Uebersicht.png")
+    sheet.save(HERE / output)
 
 
 if __name__ == "__main__":
     for motif in COLORS:
         render(motif)
-    montage()
-    print("Drei CAD-Vorschauen und eine Übersicht erzeugt.")
+    montage(("Halo", "Komet", "Signal"), "PING TRIO",
+            "Drei Motive. Eine schlanke M3-Konstruktion.", "PING_Trio_Uebersicht.png")
+    montage(("Herzaugen", "Schock", "Peek"), "PING EMOJI",
+            "Drei Gefühle. Das AirTag-Metall spielt mit.", "PING_Emoji_Uebersicht.png")
+    print("Sechs CAD-Vorschauen und zwei Übersichten erzeugt.")

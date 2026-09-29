@@ -1,8 +1,18 @@
 # PING · der kleine Schlüsselwächter
 
+## Neu: PING Trio
+
+![Drei neue Frontmotive: Halo, Komet und Signal](trio/PING_Trio_Uebersicht.png)
+
+![Neue Emoji-Motive: Herzaugen, Schock und Peek](trio/PING_Emoji_Uebersicht.png)
+
+Die [sechs PING-Varianten](trio/README.md) sind kompakter, haben leicht verrundete Kreisränder und nutzen die polierte Metallseite des AirTags als Gestaltungselement. Zu Halo, Komet und Signal sind nun **😍 Herzaugen, 😱 Schock und 🫣 Peek** hinzugekommen. Die Herzen sind vollständig offene Metallfenster; bei 🫣 lassen zwei feinere, gefächerte Hände ein Auge frei. Bei den beiden Handmotiven verändert sich auch die Außenkontur. Ein gemeinsames Rückteil passt zu allen Fronten. Für 😱 und 🫣 gibt es **optionale Farbmasken für Multimaterialdruck**; die vertieften Handformen sind auch einfarbig druckbar. Die gezeigten **M3-Zylinderkopfschrauben** erhalten für jede Schraubenlänge eine eigene Kopftasche: M3×8 ergibt die schlankere Ausführung, M3×10 baut am Kopf höher auf. FreeCAD-, STL- und STEP-Dateien sowie Druck- und Prüfanleitung stehen im Trio-Ordner. **Die neuen Varianten sind digital geprüft, aber noch nicht probeweise gedruckt.**
+
+Der folgende Abschnitt dokumentiert das bisherige PING-Modell unverändert.
+
 **Ein AirTag-Cover für den Schlüsselbund – in FreeCAD konstruiert, mit zwei PETG-Druckteilen, zwei gesicherten Schrauben und einem Zwinkern.**
 
-Dieses öffentliche Repository dokumentiert den Entwurf und macht die Dateien, den Erzeugungscode und die Prüfmethoden zugänglich. **Stand: digital geprüfter Konstruktionsprototyp; noch nicht physisch gedruckt oder belastungsgeprüft.**
+Dieses öffentliche Repository dokumentiert den Entwurf und macht die Dateien, den Erzeugungscode und die Prüfmethoden zugänglich. **Stand der ursprünglichen Veröffentlichung: digital geprüfter Konstruktionsprototyp.** Der Nutzer berichtet inzwischen, dass das bisherige Modell gedruckt wurde; Maße, Material und Belastungsergebnisse dieses Drucks sind hier noch nicht protokolliert.
 
 ![PING – tatsächliche CAD-Geometrie, montiert und explodiert](PING_Uebersicht.png)
 

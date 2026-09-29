@@ -1,0 +1,210 @@
+{
+  "freecad_version": "1.0.1",
+  "variants": {
+    "Halo_M3x8": {
+      "valid": true,
+      "assembly_bounds_mm": [
+        39.6,
+        50.7,
+        11.0
+      ],
+      "volume_mm3": 6279.04,
+      "volume_reduction_vs_ping_percent": 50.8,
+      "screw_length_mm": 8,
+      "head_projection_mm": 0.6,
+      "tip_recess_mm": 0.6,
+      "nut_thread_engagement_mm": 2.4,
+      "stl_watertight": true,
+      "stl_volume_matches_cad_within_0_3_percent": true,
+      "step_matches_cad": true
+    },
+    "Halo_M3x10": {
+      "valid": true,
+      "assembly_bounds_mm": [
+        39.6,
+        50.7,
+        11.0
+      ],
+      "volume_mm3": 6340.9,
+      "volume_reduction_vs_ping_percent": 50.3,
+      "screw_length_mm": 10,
+      "head_projection_mm": 2.0,
+      "tip_recess_mm": 0.0,
+      "nut_thread_engagement_mm": 2.4,
+      "stl_watertight": true,
+      "stl_volume_matches_cad_within_0_3_percent": true,
+      "step_matches_cad": true
+    },
+    "Komet_M3x8": {
+      "valid": true,
+      "assembly_bounds_mm": [
+        39.6,
+        50.7,
+        11.0
+      ],
+      "volume_mm3": 6606.15,
+      "volume_reduction_vs_ping_percent": 48.3,
+      "screw_length_mm": 8,
+      "head_projection_mm": 0.6,
+      "tip_recess_mm": 0.6,
+      "nut_thread_engagement_mm": 2.4,
+      "stl_watertight": true,
+      "stl_volume_matches_cad_within_0_3_percent": true,
+      "step_matches_cad": true
+    },
+    "Komet_M3x10": {
+      "valid": true,
+      "assembly_bounds_mm": [
+        39.6,
+        50.7,
+        11.0
+      ],
+      "volume_mm3": 6668.01,
+      "volume_reduction_vs_ping_percent": 47.8,
+      "screw_length_mm": 10,
+      "head_projection_mm": 2.0,
+      "tip_recess_mm": 0.0,
+      "nut_thread_engagement_mm": 2.4,
+      "stl_watertight": true,
+      "stl_volume_matches_cad_within_0_3_percent": true,
+      "step_matches_cad": true
+    },
+    "Signal_M3x8": {
+      "valid": true,
+      "assembly_bounds_mm": [
+        39.6,
+        50.7,
+        11.0
+      ],
+      "volume_mm3": 6605.92,
+      "volume_reduction_vs_ping_percent": 48.3,
+      "screw_length_mm": 8,
+      "head_projection_mm": 0.6,
+      "tip_recess_mm": 0.6,
+      "nut_thread_engagement_mm": 2.4,
+      "stl_watertight": true,
+      "stl_volume_matches_cad_within_0_3_percent": true,
+      "step_matches_cad": true
+    },
+    "Signal_M3x10": {
+      "valid": true,
+      "assembly_bounds_mm": [
+        39.6,
+        50.7,
+        11.0
+      ],
+      "volume_mm3": 6667.78,
+      "volume_reduction_vs_ping_percent": 47.8,
+      "screw_length_mm": 10,
+      "head_projection_mm": 2.0,
+      "tip_recess_mm": 0.0,
+      "nut_thread_engagement_mm": 2.4,
+      "stl_watertight": true,
+      "stl_volume_matches_cad_within_0_3_percent": true,
+      "step_matches_cad": true
+    },
+    "Herzaugen_M3x8": {
+      "valid": true,
+      "assembly_bounds_mm": [
+        39.6,
+        50.7,
+        11.0
+      ],
+      "volume_mm3": 6613.44,
+      "volume_reduction_vs_ping_percent": 48.2,
+      "screw_length_mm": 8,
+      "head_projection_mm": 0.6,
+      "tip_recess_mm": 0.6,
+      "nut_thread_engagement_mm": 2.4,
+      "stl_watertight": true,
+      "stl_volume_matches_cad_within_0_3_percent": true,
+      "step_matches_cad": true
+    },
+    "Herzaugen_M3x10": {
+      "valid": true,
+      "assembly_bounds_mm": [
+        39.6,
+        50.7,
+        11.0
+      ],
+      "volume_mm3": 6675.3,
+      "volume_reduction_vs_ping_percent": 47.7,
+      "screw_length_mm": 10,
+      "head_projection_mm": 2.0,
+      "tip_recess_mm": 0.0,
+      "nut_thread_engagement_mm": 2.4,
+      "stl_watertight": true,
+      "stl_volume_matches_cad_within_0_3_percent": true,
+      "step_matches_cad": true
+    },
+    "Schock_M3x8": {
+      "valid": true,
+      "assembly_bounds_mm": [
+        43.6,
+        50.7,
+        11.0
+      ],
+      "volume_mm3": 6745.61,
+      "volume_reduction_vs_ping_percent": 47.2,
+      "screw_length_mm": 8,
+      "head_projection_mm": 0.6,
+      "tip_recess_mm": 0.6,
+      "nut_thread_engagement_mm": 2.4,
+      "stl_watertight": true,
+      "stl_volume_matches_cad_within_0_3_percent": true,
+      "step_matches_cad": true
+    },
+    "Schock_M3x10": {
+      "valid": true,
+      "assembly_bounds_mm": [
+        43.6,
+        50.7,
+        11.0
+      ],
+      "volume_mm3": 6807.47,
+      "volume_reduction_vs_ping_percent": 46.7,
+      "screw_length_mm": 10,
+      "head_projection_mm": 2.0,
+      "tip_recess_mm": 0.0,
+      "nut_thread_engagement_mm": 2.4,
+      "stl_watertight": true,
+      "stl_volume_matches_cad_within_0_3_percent": true,
+      "step_matches_cad": true
+    },
+    "Peek_M3x8": {
+      "valid": true,
+      "assembly_bounds_mm": [
+        43.6,
+        50.7,
+        11.0
+      ],
+      "volume_mm3": 6847.76,
+      "volume_reduction_vs_ping_percent": 46.4,
+      "screw_length_mm": 8,
+      "head_projection_mm": 0.6,
+      "tip_recess_mm": 0.6,
+      "nut_thread_engagement_mm": 2.4,
+      "stl_watertight": true,
+      "stl_volume_matches_cad_within_0_3_percent": true,
+      "step_matches_cad": true
+    },
+    "Peek_M3x10": {
+      "valid": true,
+      "assembly_bounds_mm": [
+        43.6,
+        50.7,
+        11.0
+      ],
+      "volume_mm3": 6909.62,
+      "volume_reduction_vs_ping_percent": 45.9,
+      "screw_length_mm": 10,
+      "head_projection_mm": 2.0,
+      "tip_recess_mm": 0.0,
+      "nut_thread_engagement_mm": 2.4,
+      "stl_watertight": true,
+      "stl_volume_matches_cad_within_0_3_percent": true,
+      "step_matches_cad": true
+    }
+  },
+  "physical_validation": "Neue Varianten noch nicht gedruckt oder belastungsgeprüft."
+}

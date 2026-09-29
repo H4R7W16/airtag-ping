@@ -20,7 +20,7 @@ V = App.Vector
 VARIANTS = ("Halo", "Komet", "Signal", "Herzaugen", "Schock", "Peek")
 SCREW_LENGTHS = (8, 10)
 HEAD_POCKET_DEPTH = {8: 2.4, 10: 1.0}
-MASKS = {"Herzaugen": ("Rot",), "Schock": ("Orange", "Blau"), "Peek": ("Ocker",)}
+MASKS = {"Schock": ("Orange", "Blau"), "Peek": ("Ocker",)}
 
 
 def check(condition, message):
@@ -59,6 +59,13 @@ def verify():
         tag = Part.makeCylinder(15.95, 8.0, V(0, 0, 1.5))
         check(back.common(tag).Volume < 1e-5 and front.common(tag).Volume < 1e-5,
               key + ": AirTag-Hüllzylinder kollidiert")
+        if variant == "Herzaugen":
+            # Proben in den breiten Herzloben erkennen eine versehentlich stehengebliebene Einlage.
+            for center_x in (-5.7, 5.7):
+                for offset_x in (-1.5, 1.5):
+                    lobe = Part.makeCylinder(0.25, 1.4, V(center_x + offset_x, 7.0, 9.7))
+                    check(front.common(lobe).Volume < 1e-5,
+                          key + ": Herz ist kein vollständiger Durchbruch")
         for x in (-15.0, 15.0):
             y = -14.0
             nut = hex_nut(x, y)

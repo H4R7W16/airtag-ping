@@ -67,6 +67,12 @@ def capsule(start, end, radius, z, height):
     ).removeSplitter()
 
 
+def curved_finger(points, radius, z, height):
+    """Leicht geknickter Finger mit gerundeter Spitze statt geradem Schlitz."""
+    pieces = [capsule(a, b, radius, z, height) for a, b in zip(points, points[1:])]
+    return pieces[0].multiFuse(pieces[1:]).removeSplitter()
+
+
 def arc_window(radius, width, begin, end, z, height):
     """Ringsegment mit runden Enden, Winkel in Grad."""
     steps = max(12, int((end - begin) / 5))
@@ -151,29 +157,21 @@ def motif_cutters(name):
                 arc_window(12.0, 2.0, 15, 165, z, h),
                 cylinder(1.65, h, 0, -4.0, z)]
     if name == "Herzaugen":
-        return [heart(-5.7, 6.0, z, h, 0.07), heart(5.7, 6.0, z, h, 0.07),
+        return [heart(-5.7, 6.0, z, h, 0.225), heart(5.7, 6.0, z, h, 0.225),
                 arc_window(8.1, 3.4, 205, 335, z, h)]
     if name == "Schock":
         return [ellipse(-5.2, 5.1, 2.5, 3.1, z, h),
                 ellipse(5.2, 5.1, 2.5, 3.1, z, h),
                 ellipse(0, -4.3, 3.4, 5.2, z, h)]
     if name == "Peek":
-        return [cylinder(2.2, h, 6.3, 5.6, z),
-                capsule((-8.8, 6.5), (-0.3, 3.5), 0.85, z, h),
-                capsule((-9.5, 3.1), (1.8, 0.6), 0.85, z, h),
-                capsule((-8.5, -0.7), (2.5, -3.4), 0.8, z, h),
-                capsule((-6.5, -4.6), (2.0, -7.4), 0.75, z, h),
-                capsule((4.1, -5.2), (6.0, -5.8), 0.55, z, h)]
+        # Das einzelne Auge schaut zwischen zwei gefächerten Händen hervor.
+        return [ellipse(5.0, 6.0, 2.35, 2.9, z, h)]
     raise ValueError(name)
 
 
 def decoration(name):
     """Flache Farbmasken: bündig für Multimaterialdruck, als Vertiefung auch einfarbig lesbar."""
     z, h = 0, 0.4
-    if name == "Herzaugen":
-        rings = [heart(x, 6.0, z, h, 0.225).cut(heart(x, 6.0, -0.1, h + 0.2, 0.07))
-                 for x in (-5.7, 5.7)]
-        return {"Rot": Part.makeCompound(rings)}
     if name == "Schock":
         hands = []
         for side in (-1, 1):
@@ -185,14 +183,20 @@ def decoration(name):
         blue = ellipse(0, 12.4, 11.2, 2.9, z, h)
         return {"Orange": Part.makeCompound(hands), "Blau": blue}
     if name == "Peek":
-        left = [cylinder(3.9, h, -14.2, -5.2, z)]
-        left += [capsule((-12.0, y0), (x1, y1), 1.25, z, h)
-                 for y0, x1, y1 in ((0.5, 0.3, 7.3), (-1.8, 1.8, 3.3),
-                                    (-4.0, 2.3, -0.8), (-6.3, 2.1, -4.6))]
-        right = [cylinder(3.7, h, 14.0, -5.3, z),
-                 capsule((12.5, -2.0), (6.3, -0.3), 1.2, z, h),
-                 capsule((11.5, -4.4), (4.3, -3.3), 1.2, z, h),
-                 capsule((11.2, -6.4), (5.1, -6.3), 1.15, z, h)]
+        left = [ellipse(-14.0, -5.0, 4.1, 4.9, z, h)]
+        left += [curved_finger(points, 1.02, z, h) for points in (
+            ((-13.8, -1.1), (-11.0, 5.0), (-5.5, 9.2)),
+            ((-12.3, -1.0), (-8.4, 3.5), (-2.0, 6.5)),
+            ((-11.6, -2.3), (-7.1, 0.8), (-0.5, 3.0)),
+            ((-11.4, -4.0), (-6.8, -2.4), (0.4, -1.0)),
+        )]
+        right = [ellipse(14.0, -5.5, 4.1, 4.6, z, h)]
+        right += [curved_finger(points, 1.02, z, h) for points in (
+            ((12.8, -1.8), (10.5, 1.3), (7.8, 3.1)),
+            ((11.7, -2.8), (8.5, -0.7), (4.7, 0.5)),
+            ((11.3, -4.4), (7.2, -3.0), (3.1, -2.5)),
+            ((11.1, -6.4), (7.0, -6.1), (3.4, -5.5)),
+        )]
         hands = Part.makeCompound([left[0].multiFuse(left[1:]).removeSplitter(),
                                    right[0].multiFuse(right[1:]).removeSplitter()])
         return {"Ocker": hands}

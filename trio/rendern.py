@@ -16,11 +16,11 @@ COLORS = {
     "Halo": ((0.06, 0.12, 0.17), "#183242", "Die ganze Mitte wird zum Spiegel"),
     "Komet": ((0.78, 0.24, 0.12), "#9e3b23", "Metalllicht in Bewegung"),
     "Signal": ((0.10, 0.29, 0.34), "#21515b", "Drei glänzende Funkbögen"),
-    "Herzaugen": ((0.98, 0.72, 0.14), "#ae3041", "Rote Herzen mit metallischem Glanz"),
+    "Herzaugen": ((0.98, 0.72, 0.14), "#ae3041", "Herzen als offene Metallfenster"),
     "Schock": ((0.99, 0.77, 0.28), "#397ba1", "Hände an den Wangen, Augen weit offen"),
-    "Peek": ((0.98, 0.73, 0.22), "#9a6d1d", "Ein Auge lugt zwischen den Fingern hervor"),
+    "Peek": ((0.98, 0.73, 0.22), "#9a6d1d", "Ein Auge zwischen zwei gefächerten Händen"),
 }
-MASK_COLORS = {"Rot": (0.82, 0.075, 0.16), "Orange": (0.97, 0.56, 0.25),
+MASK_COLORS = {"Orange": (0.97, 0.56, 0.25),
                "Blau": (0.46, 0.77, 0.86), "Ocker": (0.94, 0.55, 0.22)}
 
 

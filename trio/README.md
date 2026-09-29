@@ -4,7 +4,7 @@
 
 ![Die Emoji-Varianten Herzaugen, Schock und Peek](PING_Emoji_Uebersicht.png)
 
-**Sechs Frontmotive, ein gemeinsames Rückteil.** Die polierte Edelstahl-Batterieabdeckung des AirTags zeigt zur Motivfront und bildet den sichtbaren Metallakzent. Die drei neuen Gesichter übernehmen die typischen Formen der Vorlagen: rote Herzaugen und breites Lächeln, Hände an den Wangen mit aufgerissenen Augen und Mund sowie zwei Hände vor dem Gesicht mit einem freien Auge. Bei 😱 und 🫣 formen die Hände sogar die Außenkontur mit. Die Vorschauen zeigen die gespeicherte CAD-Geometrie samt optionalen Farbmasken; AirTag und Schrauben sind vereinfacht dargestellt. Diese Varianten sind digital geprüft, **noch nicht probeweise gedruckt oder belastungsgeprüft**.
+**Sechs Frontmotive, ein gemeinsames Rückteil.** Die polierte Edelstahl-Batterieabdeckung des AirTags zeigt zur Motivfront und bildet den sichtbaren Metallakzent. Die drei Gesichter übernehmen die typischen Formen der Vorlagen: vollständige Herzöffnungen und breites Lächeln, Hände an den Wangen mit aufgerissenen Augen und Mund sowie zwei gefächerte Hände vor dem Gesicht mit einem freien Auge. Bei 😱 und 🫣 formen die Hände auch die Außenkontur mit. Die Vorschauen zeigen die gespeicherte CAD-Geometrie samt optionalen Farbmasken; AirTag und Schrauben sind vereinfacht dargestellt. Diese Varianten sind digital geprüft, **noch nicht probeweise gedruckt oder belastungsgeprüft**.
 
 ## Varianten und Dateien
 
@@ -13,21 +13,20 @@
 | Halo | Große runde Öffnung als Metallspiegel, feine Bogenrille | [FCStd](CAD/PING_Trio_Halo.FCStd) | [STL](CAD/PING_Trio_Halo_Front.stl) | [STEP](CAD/PING_Trio_Halo.step) | [PNG](CAD/PING_Trio_Halo_Vorschau.png) |
 | Komet | Versetzter Metallkern mit drei diagonalen Spuren | [FCStd](CAD/PING_Trio_Komet.FCStd) | [STL](CAD/PING_Trio_Komet_Front.stl) | [STEP](CAD/PING_Trio_Komet.step) | [PNG](CAD/PING_Trio_Komet_Vorschau.png) |
 | Signal | Drei gestaffelte Bögen mit Metallglanz | [FCStd](CAD/PING_Trio_Signal.FCStd) | [STL](CAD/PING_Trio_Signal_Front.stl) | [STEP](CAD/PING_Trio_Signal.step) | [PNG](CAD/PING_Trio_Signal_Vorschau.png) |
-| Herzaugen 😍 | Große rote Herzflächen mit kleinen Metallreflexen und breites Lächeln | [FCStd](CAD/PING_Trio_Herzaugen.FCStd) | [STL](CAD/PING_Trio_Herzaugen_Front.stl) | [STEP](CAD/PING_Trio_Herzaugen.step) | [PNG](CAD/PING_Trio_Herzaugen_Vorschau.png) |
+| Herzaugen 😍 | Zwei vollständig offene Herzen mit Metallfläche dahinter und breites Lächeln | [FCStd](CAD/PING_Trio_Herzaugen.FCStd) | [STL](CAD/PING_Trio_Herzaugen_Front.stl) | [STEP](CAD/PING_Trio_Herzaugen.step) | [PNG](CAD/PING_Trio_Herzaugen_Vorschau.png) |
 | Schock 😱 | Hände an den Wangen, weite Augen, hoher ovaler Mund, blaue Stirn | [FCStd](CAD/PING_Trio_Schock.FCStd) | [STL](CAD/PING_Trio_Schock_Front.stl) | [STEP](CAD/PING_Trio_Schock.step) | [PNG](CAD/PING_Trio_Schock_Vorschau.png) |
-| Peek 🫣 | Zwei Hände vor dem Gesicht, Fingerzwischenräume aus Metall, freies Auge | [FCStd](CAD/PING_Trio_Peek.FCStd) | [STL](CAD/PING_Trio_Peek_Front.stl) | [STEP](CAD/PING_Trio_Peek.step) | [PNG](CAD/PING_Trio_Peek_Vorschau.png) |
+| Peek 🫣 | Zwei gefächerte Hände mit gekrümmten Fingern und ein freies Metallauge | [FCStd](CAD/PING_Trio_Peek.FCStd) | [STL](CAD/PING_Trio_Peek_Front.stl) | [STEP](CAD/PING_Trio_Peek.step) | [PNG](CAD/PING_Trio_Peek_Vorschau.png) |
 
 Die Tabelle zeigt die **schlanke M3×8-Ausführung**. Für M3×10 gibt es zu jedem Motiv eine eigene Front mit dem Suffix `_M3x10`, beispielsweise [Herzaugen M3×10 als FCStd](CAD/PING_Trio_Herzaugen_M3x10.FCStd), [STL](CAD/PING_Trio_Herzaugen_M3x10_Front.stl) und [STEP](CAD/PING_Trio_Herzaugen_M3x10.step). Für jedes Motiv einmal das [gemeinsame Rückteil](CAD/PING_Trio_Rueckteil.stl) und **die zur Schraubenlänge passende Front** drucken. Der [Generator](CAD_erzeugen.py) erzeugt alle CAD-, STEP- und STL-Dateien neu. Der [Prüfcode](pruefen.py) prüft beide Schraubenlängen. [Erzeugungsbericht](CAD/Erzeugungsbericht.json) und [Prüfbericht](CAD/Pruefbericht.json) dokumentieren den vorliegenden Stand.
 
 ### Emoji-Farben drucken oder einfarbig lassen
 
-Die drei Emoji-Fronten haben **0,4 mm tiefe, geometrisch ausgeformte Farbflächen**. Für einen einfarbigen Druck genügt die jeweilige `Front.stl`; Herzaugen, Stirn und Hände bleiben als Vertiefungen erkennbar und lassen sich bei Bedarf mit Farbe auslegen. Die Metallfenster sind echte Öffnungen zur AirTag-Kappe.
+Die 😍-Herzen sind **vollständige Durchbrüche** ohne rote Farbmaske. Die polierte AirTag-Kappe bildet die gesamte sichtbare Herzfläche. 😱 und 🫣 haben **0,4 mm tiefe, geometrisch ausgeformte Farbflächen** für Stirn und Hände. Für einen einfarbigen Druck genügt die jeweilige `Front.stl`; die Handformen bleiben als Vertiefungen erkennbar und lassen sich bei Bedarf mit Farbe auslegen. Die Metallfenster sind echte Öffnungen zur AirTag-Kappe.
 
-Für einen Multimaterialdruck die passende Front zusammen mit ihren **Farbmasken-STLs in derselben Lage als Teile eines Objekts** importieren und die Materialien zuweisen. Die Farbmasken sind bündige, passgenaue CAD-Teile für den gemeinsamen Druck, keine einzeln auf dem Druckbett zu druckenden Einleger. Ihre Z-Koordinaten liegen wie bei der Front zwischen 0 und 0,4 mm. Die CAD-Vorschauen zeigen diese Variante. Alle Farbmasken sind in den FreeCAD-Dateien als separate Objekte enthalten:
+Für einen Multimaterialdruck von 😱 oder 🫣 die passende Front zusammen mit ihren **Farbmasken-STLs in derselben Lage als Teile eines Objekts** importieren und die Materialien zuweisen. Die Farbmasken sind bündige, passgenaue CAD-Teile für den gemeinsamen Druck, keine einzeln auf dem Druckbett zu druckenden Einleger. Ihre Z-Koordinaten liegen wie bei der Front zwischen 0 und 0,4 mm. Die CAD-Vorschauen zeigen diese Variante. Die Farbmasken sind in den betreffenden FreeCAD-Dateien als separate Objekte enthalten:
 
 | Emoji | Farbmasken |
 |---|---|
-| 😍 Herzaugen | [Rot](CAD/PING_Trio_Herzaugen_Rot_Farbmaske.stl) |
 | 😱 Schock | [Orange (Hände)](CAD/PING_Trio_Schock_Orange_Farbmaske.stl), [Blau (Stirn)](CAD/PING_Trio_Schock_Blau_Farbmaske.stl) |
 | 🫣 Peek | [Ocker (Hände)](CAD/PING_Trio_Peek_Ocker_Farbmaske.stl) |
 
@@ -42,9 +41,9 @@ Beim Slicen die erste Schicht und die Materialgrenzen kontrollieren. Die Farbmas
 | Hauptscheibe | Ø38,4 mm | Ø43,0 mm |
 | AirTag-Aufnahme | Ø32,5 × 8,6 mm | Ø32,5 × 8,6 mm |
 | Außenkanten der runden Scheiben | Radius 0,45 mm | Fase 0,65 mm |
-| Rechnerisches Kunststoffvolumen der zwei Schalen, je nach Motiv und Schraubenlänge | 6,28–6,84 cm³ | 12,77 cm³ |
+| Rechnerisches Kunststoffvolumen der zwei Schalen, je nach Motiv und Schraubenlänge | 6,28–6,91 cm³ | 12,77 cm³ |
 
-Das modellierte Kunststoffvolumen der Schalen sinkt um **46,4–50,8 %**. Optionale Farbmasken kommen hinzu. Das ist eine CAD-Volumenrechnung, keine gemessene Druckmasse. Die M3×8-Version erreicht die gewünschte geringere Gesamtdicke; bei M3×10 stehen die höheren Köpfe um 2,0 mm über. Die Schraubpunkte liegen diagonal im Rand der Scheibe, statt als seitliche Ohren weit herauszuragen. Die AirTag-Aufnahme behält das bisherige Nennspiel: Ø31,9 × 8,0 mm AirTag-Hüllraum in Ø32,5 × 8,6 mm Aufnahme, also 0,3 mm radial und axial je Seite. Die Front hält den AirTag mit einem umlaufenden Rand fest; eine Zentrierlippe führt die Hälften.
+Das modellierte Kunststoffvolumen der Schalen sinkt um **45,9–50,8 %**. Optionale Farbmasken kommen hinzu. Das ist eine CAD-Volumenrechnung, keine gemessene Druckmasse. Die M3×8-Version erreicht die gewünschte geringere Gesamtdicke; bei M3×10 stehen die höheren Köpfe um 2,0 mm über. Die Schraubpunkte liegen diagonal im Rand der Scheibe, statt als seitliche Ohren weit herauszuragen. Die AirTag-Aufnahme behält das bisherige Nennspiel: Ø31,9 × 8,0 mm AirTag-Hüllraum in Ø32,5 × 8,6 mm Aufnahme, also 0,3 mm radial und axial je Seite. Die Front hält den AirTag mit einem umlaufenden Rand fest; eine Zentrierlippe führt die Hälften.
 
 Die runden Außenkanten sind verrundet. Die Ränder der Motivöffnungen sind drucktechnisch bewusst scharf: Sie liegen in der nur 1,2 mm starken Frontfläche und sollen ihre Form behalten. Sichtbare Schnittkanten können nach dem Druck vorsichtig entgratet werden.
 
@@ -86,7 +85,7 @@ Getestet mit **FreeCAD 1.0.1** und dessen gebündeltem Python unter Windows:
 python .\verify_files.py
 ```
 
-Die FCStd-Dateien enthalten pro Variante zwei native FreeCAD-Bodies, eine Maßtabelle und bei den Emoji-Varianten separate Farbmasken-Objekte. Die Körper sind durch den Python-Generator erzeugte `PartDesign::Feature`-Volumenkörper. **Die Maßtabelle steuert die Geometrie nicht automatisch**; für Änderungen an Durchmessern, Motiven oder Schraubentyp den Generator anpassen und CAD, STLs, STEP, Prüfung und Prüfsummen neu erzeugen. Das bisherige PING im Repository bleibt als eigener Stand erhalten.
+Die FCStd-Dateien enthalten pro Variante zwei native FreeCAD-Bodies und eine Maßtabelle; 😱 und 🫣 enthalten zusätzlich separate Farbmasken-Objekte. Die Körper sind durch den Python-Generator erzeugte `PartDesign::Feature`-Volumenkörper. **Die Maßtabelle steuert die Geometrie nicht automatisch**; für Änderungen an Durchmessern, Motiven oder Schraubentyp den Generator anpassen und CAD, STLs, STEP, Prüfung und Prüfsummen neu erzeugen. Das bisherige PING im Repository bleibt als eigener Stand erhalten.
 
 ## Quellen und Annahmen
 
